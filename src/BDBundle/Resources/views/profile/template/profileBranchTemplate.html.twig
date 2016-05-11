@@ -1,0 +1,466 @@
+<link href={{ asset('bundles/bd/input-focus-effect/input-style.css') }} rel="stylesheet">
+
+<div class="container" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 ">
+            <div id="map"></div>
+
+            <div id="button_set" class="row" style=" margin: 30px 0; padding: 20px 0px;">
+                <button id="add_button" class="button"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                <button id="edit_button"  class="button"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                <button id="remove_button"  class="button"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6  branch">
+            <div id="accordion">
+                {% for branch in branches %}
+                    {% if branch is not empty %}
+                        <h3> {{ branch.branchName }}</h3>
+                        <div id="{{ branch._id }}">
+                            <input type="hidden" class="id" value="{{ branch._id }}">
+                            <input type="hidden" class="latitude" value="{{ branch.address.latitude }}">
+                            <input type="hidden" class="longitude" value="{{ branch.address.longitude }}">
+
+                            <p>{{ branch.address.street }}, {{ branch.address.city }},
+                                {% if branch.address.state is defined %}
+                                    {{ branch.address.state }}
+                                {% endif %}
+                                {% if branch.address.zipcode is defined %}
+                                    {{ branch.address.zipcode }}
+                                {% endif %}
+                                , {{ branch.address.country }}</p>
+                            <p>{{ branch.email }}</p>
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div id="form_block" class="row no-margin" style="margin: 0; display: none">
+        <div class="alert alert-danger" style="display:none;"></div>
+        {{ form_start(form) }}
+
+        <div class="container">
+
+            <h3>General</h3>
+            <hr class="no-margin">
+            <div class="row ">
+                <div class="col-3">
+                    {{ form_widget(form.branchName, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'50' } }) }}
+                    {{ form_label(form.branchName) }}
+                    <span class="focus-border">
+                    <i></i>
+                    </span>
+                </div>
+            </div>
+
+            <h3>Contact Details</h3>
+            <hr class="no-margin">
+            <div class="row" >
+                <div class="col-3  input-effect">
+                    {{ form_widget(form.email, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'50'} }) }}
+
+                    {{ form_label(form.email) }}
+                    <span class="focus-border">
+                    <i></i>
+                    </span>
+                </div>
+                <div class="col-3  input-effect">
+                    {{ form_widget(form.contactNumbers.country, { 'attr': {'class': "effect-16 has-content",
+                        'placeholder': ' '} }) }}
+
+                   <label>Country Code</label>
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+
+                </div>
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.contactNumbers.number, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'15' } }) }}
+
+                    {{ form_label(form.contactNumbers) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+
+                </div>
+            </div>
+
+            <h3>Address</h3>
+            <hr class="no-margin">
+            <div class="row">
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.address.street, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ','maxlength' :'100' } }) }}
+
+                    {{ form_label(form.address.street) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+
+                </div>
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.address.city, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'50'} }) }}
+
+                    {{ form_label(form.address.city) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+
+                </div>
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.address.zipcode, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'10' } })}}
+
+                    {{ form_label(form.address.zipcode) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+                </div>
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.address.state, { 'attr': {'class': "effect-16",
+                        'placeholder': ' ', 'maxlength' :'50' } }) }}
+
+                    {{ form_label(form.address.state) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+                </div>
+                <div class="col-3 input-effect">
+                    {{ form_widget(form.address.country, { 'attr': {'class': "effect-16 has-content",
+                        'placeholder': ' '} }) }}
+
+                    {{ form_label(form.address.country) }}
+                    <span class="focus-border">
+                    <i></i>
+                </span>
+                </div>
+            </div>
+
+        </div>
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-10 col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-2">
+                <button id="submit_button" class="button"><span class="glyphicon glyphicon-ok"></span> Submit</button>
+                <button id="cancel_button"  class="button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="{{ asset('bundles/bd/superplaceholder/js/superplaceholder.js') }}"></script>
+
+<style>
+
+
+
+    @media (max-width: 767px) {
+        #map {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #333;
+            border-radius: 2px;
+        }
+    }
+
+    @media (min-width: 767px) {
+        #map {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #333;
+            border-radius: 2px;
+        }
+    }
+
+    .ui-accordion-header{
+        background: none; !important;
+        background-color: #333; !important;
+        color:  #9d9d9d;
+    }
+
+    .ui-accordion-header-active{
+        background: none; !important;
+        background-color: #4caf50; !important;
+        color: white;
+    }
+
+    body{
+        background-color: white;
+    }
+</style>
+
+<script>
+
+
+    $(function() {
+        $( "#accordion" ).accordion({
+            collapsible: true,
+            active: false,
+        });
+    });
+
+
+    var map = new GMaps({
+        el: '#map',
+//                lat: 48.8583701,
+//                lng: 2.2944813,
+    });
+
+    var branches = {{ branches|json_encode()|raw }};
+    var bounds = [];
+    branches.forEach(function(branch, index){
+
+        if (typeof branch.address.latitude === 'undefined' || branch.address.latitude === null ){
+
+        }else {
+            //set bounds to define zoom of map
+            var latlng = new google.maps.LatLng(branch.address.latitude, branch.address.longitude);
+            bounds.push(latlng);
+
+            map.addMarker({
+                id: branch._id,
+                lat: branch.address.latitude,
+                lng: branch.address.longitude,
+                title: branch.branchName,
+                infoWindow: {
+                    content: '<h4>' + branch.branchName + '</h4><div>' + branch.address.city + ',' + branch.address.country + '</div>',
+                    maxWidth: 150
+                },
+                color: 'blue',
+                dblclick: function (e) {
+                    initEdit(branch);
+                }
+            });
+        }
+    });
+    map.fitLatLngBounds(bounds);
+
+
+
+
+    $('#button_set #add_button').click(function(ev){
+        $('#form_block').fadeIn();
+        $('#button_set button').attr('disabled', 'true');//disable the button
+
+        $('html,body').animate({
+                    scrollTop: $('#button_set').offset().top},
+                1000);
+    });
+
+    $('#button_set #edit_button').click(function(e){
+
+        var branch =$('#accordion .ui-accordion-header-active').parent();
+
+        if(branch.length===1){
+
+            var id = branch.find($('.id')).val();
+
+            //seaching for branch in input array
+            var branch = null;
+            $(branches).each(function(i, b){
+                if (b._id===id){
+                    branch = b;
+                }
+            });
+
+            if(branch == null){
+                alert('Branch not found')
+                $(this).attr('disabled' , 'false');
+                return;
+            }
+            initEdit(branch);
+        }
+        else {
+            alert("Select Branch First");
+        }
+    });
+
+    $('#remove_button').click(function(e){
+
+        var branch =$('#accordion .ui-accordion-header-active').parent();
+
+        if(branch.length===1){
+
+            $(this).attr('disabled', 'true');//disable the button
+
+            var id = branch.find($('.id')).val();
+            if (id!=null && id!='' && id != {{ company_id }}){
+                removeBranch(id);
+            }else {
+                alert("Cant identify the selected branch id");
+            }
+            $(this).attr('disabled', 'false');//enable the button
+        }
+        else {
+            alert("Select Branch First");
+            $(this).attr('disabled', 'false');//enable the button
+        }
+    });
+
+
+
+    $('#submit_button').click(function(e){
+        $('#form_block .alert').fadeOut('fast');
+        e.preventDefault();
+        var form =  $("form[name='branch']");
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('modify_branches')|raw }}?id={{ company_id|raw }}',
+            data: form.serializeArray(),
+            success: function (data) {
+                alert('save success');
+                console.dir(data);
+                loadPage('branches');
+            },
+            error: function (e) {
+                var errors =$.parseJSON(e.responseText).error;
+                var errorDiv = $('#form_block .alert');
+
+                console.dir(errors);
+                $(errors).each(function(i,e){
+                    errorDiv.append('<p>'+ e.error+'</p>');
+                });
+                errorDiv.fadeIn().delay(10000).fadeOut();
+                alert('error in saving form')
+            },
+        });
+    });
+
+    $('#cancel_button').click(function(e){
+        loadPage('branches')
+    });
+
+
+    function initEdit(branch){
+
+
+        $('#button_set button').attr('disabled', 'true');//disable the button
+
+        var form =$('#form_block');
+        //if branch not found return from method
+
+        //populate the form with branch variables
+        form.find($('#branch_id')).val(branch._id);
+        form.find($('#branch_branchName')).val(branch.branchName);
+        form.find($('#branch_email')).val(branch.email);
+//                   form.find($('#branch_contactNumbers_country')).val(branch.contactNumbers.country.toString());
+        form.find($('#branch_contactNumbers_number')).val(branch.contactNumbers.number);
+        form.find($('#branch_address_street')).val(branch.address.street);
+        form.find($('#branch_address_city')).val(branch.address.city);
+        form.find($('#branch_address_zipcode')).val(branch.address.zipcode);
+        form.find($('#branch_address_state')).val(branch.address.state);
+        form.find($('#branch_address_country')).val(branch.address.country_code);
+        form.find($('#branch_address_latitude')).val(branch.address.latitude);
+        form.find($('#branch_address_longitude')).val(branch.address.longitude);
+
+        checkForContent();
+
+        map.removeMarkers();
+
+        if (typeof branch.address.latitude === 'undefined' || branch.address.latitude === null ){
+
+        }else {
+            var m = map.addMarker({
+                id: branch._id,
+                lat: branch.address.latitude,
+                lng: branch.address.longitude,
+                title: branch.branchName,
+                animation: google.maps.Animation.BOUNCE,
+                infoWindow: {
+                    content: '<h4>' + branch.branchName + '</h4><div>' + branch.address.city + ',' + branch.address.country + '</div>',
+                    maxWidth: 150,
+
+                },
+                draggable: true,
+                dragend: function (e) {
+                    alert('You draged ' + this.id);
+                    var b = $('#' + this.id)
+                    form.find($('#branch_address_latitude')).val(this.position.lat());
+                    form.find($('#branch_address_longitude')).val(this.position.lng());
+                },
+                click: function (e) {
+                    toggleBounce(this)
+                },
+            });
+        }
+
+        function toggleBounce(marker) {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+
+        map.setCenter({  lat: branch.address.latitude, lng: branch.address.longitude});
+
+
+        $(form).fadeIn(100);
+
+        $('html,body').delay(500).animate({
+                    scrollTop: $('#button_set').offset().top},
+                1000);
+
+    }
+
+    function removeBranch(branch_id){
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('remove_branch')|raw }}',
+            data:{id : '{{ company_id|raw }}' , branch_id : branch_id} ,
+            success: function (data) {
+                alert('remove success');
+                console.dir(data);
+                loadPage('branches');
+            },
+            error: function (e) {
+                alert('error in removing branch');
+            }
+        });
+    }
+
+
+</script>
+
+
+{#form scripts#}
+<script>
+
+
+    $(document).ready(function ({}) {
+        $(".input-effect input").focusout(function(){
+            if($(this).val() != ""){
+                $(this).addClass("has-content");
+            }else{
+                $(this).removeClass("has-content");
+            }
+        })
+    });
+
+
+    function checkForContent(){
+
+        $(".input-effect input").each(function(){
+            console.dir($(this).val());
+            if($(this).val() != ""){
+                $(this).addClass("has-content");
+            }else{
+                $(this).removeClass("has-content");
+            }
+        })
+    }
+
+
+</script>

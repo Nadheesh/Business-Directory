@@ -1,0 +1,48 @@
+
+
+
+.tableWidth {
+
+    width: inherit;
+}
+
+.tableWidth tr td:nth-child(1) {
+    width: 20%;
+    color: #2d5c8a;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+
+}
+
+.tableWidth tr td:nth-child(2) {
+    width: 70%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+.tableWidth tr {
+    border-bottom: 20px solid transparent;
+    border-top: 20px solid transparent;
+}
+
+
+.formContainer {
+    padding: 25px 40px 25px 40px;
+    /*background-color: #eaeaea;*/
+    border: 5px solid #EFEFEF;
+    /*color: white;*/
+    border-radius: 10px;
+
+    float: none;
+    margin: 0 auto;
+}
+
+
+#error_error_desc{
+    height: 10vh;
+}
+
+li *{
+    display:inline-block;
+    margin:0 10px;
+}

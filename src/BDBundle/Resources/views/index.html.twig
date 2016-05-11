@@ -1,0 +1,218 @@
+{% extends 'BDBundle::base.html.twig' %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('bundles/bd/animated-bg/css/normalize.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/bd/animated-bg/css/animated.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/bd/animated-bg/css/style.css') }}"/>
+
+    <style>
+
+
+        .title p {
+            display: inline-block;
+            font-size: 72px;
+            color: yellow;
+            text-transform: uppercase;
+            position: relative;
+            margin: 0 20px;
+            float: left;
+            opacity: 0.0;
+            animation: port 3s 1 forwards;
+            -webkit-animation: port 3s 1 forwards;
+        }
+
+        .title p:nth-of-type(2){
+            animation-delay: 0.1s;
+            -webkit-animation-delay: 0.1s;
+        }
+
+        .title p:nth-of-type(3){
+            animation-delay: 0.2s;
+            -webkit-animation-delay: 0.2s;
+        }
+
+        .title p:nth-of-type(4){
+            animation-delay: 0.3s;
+            -webkit-animation-delay: 0.3s;
+        }
+
+        .title p:nth-of-type(5){
+            animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+        }
+
+        .title p:nth-of-type(6){
+            animation-delay: 0.5s;
+            -webkit-animation-delay: 0.5s;
+        }
+
+        .title p:nth-of-type(7){
+            animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+        }
+
+        .title p:nth-of-type(8){
+            animation-delay: 0.7s;
+            -webkit-animation-delay: 0.7s;
+        }
+
+        .title p:nth-of-type(9){
+            animation-delay: 0.8s;
+            -webkit-animation-delay: 0.8s;
+        }
+
+        .title:hover p {
+            /*animation: reset 1s 1;*/
+            /*-webkit-animation: reset 1s 1 ;*/
+        }
+
+        @keyframes port {
+            0%{
+                transform: rotateY(90deg) translateY(25%);
+                opacity: 0.0;
+            }
+            100%{
+                transform: rotateY(0deg) translateY(0%);
+                opacity: 1.0;
+            }
+        }
+
+        @-webkit-keyframes port {
+            0%{
+                -webkit-transform: rotateY(90deg) translateY(25%);
+                opacity: 0.0;
+            }
+            100%{
+                -webkit-transform: rotateY(0deg) translateY(0%);
+                opacity: 1.0;
+            }
+        }
+
+        @keyframes reset {
+            0%{}
+            100%{}
+        }
+
+        @-webkit-keyframes reset {
+            0%{}
+            100%{}
+        }
+
+        .header-h{
+            width : 100%;
+            top : 0;
+            left: 0;
+            position: absolute;
+            z-index: 1000;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            color: whitesmoke;
+        }
+
+        .dropdown-menu{
+            z-index: 10000;
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div id="large-header" class="row large-header">
+        <canvas id="demo-canvas"></canvas><p style="z-index: 100; position: absolute"></p>
+        <div class="row">
+            <div class="header-h title">
+
+                <p>B</p>
+                <p>u</p>
+                <p>s</p>
+                <p>i</p>
+                <p>n</p>
+                <p>e</p>
+                <p>s</p>
+                <p>s</p>
+
+                <p>&nbsp;</p>
+                <p>D</p>
+                <p>i</p>
+                <p>r</p>
+                <p>e</p>
+                <p>c</p>
+                <p>t</p>
+                <p>o</p>
+                <p>r</p>
+                <p>y</p>
+            </div>
+
+
+        </div>
+        <h1 class="main-title">Connect <span class="thin">Three</span></h1>
+        <div class="searchform">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input style="width: 350px" type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">  <a style="font-size: 16px; color: yellow" href="{{ path('company_search') }}">Advance Filter</a></div>
+        </div>
+    </div>
+
+
+
+
+
+
+<style>
+
+    .large-header{
+        margin: 0;
+    }
+    .nav a{
+        font-size: 20px !important;
+    }
+
+    body{
+        color: #333;
+        font-family: "Roboto", UILanguageFont, Arial, sans-serif;
+
+
+        background: rgba(226,226,226,1);
+        background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+        background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+        background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+        background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+        background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+    }
+
+
+    .searchform {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        color: #f9f1e9;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0);
+    }
+</style>
+
+<script src=" {{ asset('bundles/bd/animated-bg/js/EasePack.js') }}"></script>
+<script src=" {{ asset('bundles/bd/animated-bg/js/raf.js') }}"></script>
+<script src=" {{ asset('bundles/bd/animated-bg/js/TweenLite.js') }}"></script>
+<script src=" {{ asset('bundles/bd/animated-bg/js/index.js') }}"></script>
+
+{% endblock %}
+
+
+
+

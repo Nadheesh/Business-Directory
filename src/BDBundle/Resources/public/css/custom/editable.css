@@ -1,0 +1,127 @@
+/*editable component style*/
+
+/*end error message style*/
+.m_error {
+    display: inline-block;
+    /*padding:2px 10px;*/
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    opacity: 0.8;
+    text-align: left;
+    position: relative;
+    left: 0;
+}
+
+.m_error span, .m_error span ul li{
+    color: #2da2c8 !important;
+}
+
+
+.editableComponent {
+    outline: 2px solid #2da2c8;
+    box-shadow: 0 0 0 1px #2da2c8;
+
+}
+
+
+/*animated editable area*/
+/*.editableComponent {*/
+    /*outline: 2px dashed whitesmoke;*/
+    /*box-shadow: 0 0 0 1px #2da2c8;*/
+    /*animation: 0.5s animatedEditable ease infinite;*/
+
+/*}*/
+
+/*@keyframes animatedEditable {*/
+    /*to {*/
+        /*outline-color: #2da2c8;*/
+        /*box-shadow: 0 0 0 1px #c0c3d5;*/
+    /*}*/
+/*}*/
+
+/*editable error style*/
+.editableErrorComponent{
+    outline: 2px dashed whitesmoke;
+    box-shadow: 0 0 0 1px #880000;
+    animation: 0.5s animatedError ease infinite;
+}
+
+@keyframes animatedError {
+    to {
+        outline-color: #880000;
+        box-shadow: 0 0 0 1px #c0c3d5;
+    }
+}
+
+
+.editableHeader h1{
+    font-size: 48px;
+    border-bottom: 15px solid #2da2c8;
+    margin-bottom: 25px;
+}
+.editableHeader h2{
+    font-size: 40px;
+    border-bottom: 11px solid #2da2c8;
+    margin-bottom: 35px;
+}
+.editableHeader h3{
+    font-size: 32px;
+    border-bottom: 8px solid #2da2c8;
+    margin-bottom: 15px;
+}
+.editableHeader {
+    margin-left: 0;
+    margin-right: 0;
+}
+/*editable header style end===================================*/
+
+/*editable paragraph style start==============================*/
+.editableParagraph p,.editableParagraph h1,.editableParagraph h2,.editableParagraph h3{
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: none;
+    border: none;
+}
+
+/*paragraph and header styles*/
+.editableParagraph p{
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 300;
+}
+.editableParagraph h1{
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 200;
+}
+.editableParagraph h2{
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 200;
+}
+.editableParagraph h3{
+    font-size: 22px;
+    line-height: 32px;
+    font-weight: 200;
+}
+
+
+/*list and numbering styles*/
+.editableParagraph ul li{
+    list-style: disc;
+    color: #2da2c8;
+}
+
+.editableParagraph ol li{
+    color: #2da2c8;
+}
+
+.editableParagraph ul{
+    padding-left: 40px;
+}
+
+.editableParagraph a{
+    color: #337ab7;
+}
+
+/*editable paragraph style end-===============================*/

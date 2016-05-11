@@ -1,0 +1,306 @@
+
+
+<div class="row no-margin">
+
+    <div id="form_block" class="row no-margin">
+        {{ form_start(form) }}
+        <div class="alert alert-danger" style="display:none;"></div>
+        <div class="row no-margin input-row">
+            <div class="col-3 input-effect">
+                {{ form_widget(form.companyName, { 'attr': {'class': "effect-16",
+                    'placeholder': ' '} }) }}
+
+                {{ form_label(form.companyName) }}
+                <span class="focus-border">
+                    <i></i>
+                </span>
+
+            </div>
+            <div class="col-3 input-effect">
+                {{ form_widget(form.brandName, { 'attr': {'class': "effect-16",
+                    'placeholder': ' '} }) }}
+
+                {{ form_label(form.brandName) }}
+                <span class="focus-border">
+                    <i></i>
+                </span>
+
+            </div>
+        </div>
+
+
+
+        {{ form_widget(form.desc) }}
+
+
+        {{ form_end(form) }}
+    </div>
+
+
+    <div class="row no-margin ">
+        <div class="col-md-11 col-md-offset-1">
+            <h4>Add a description that describe your company best...</h4>
+        </div>
+    </div>
+
+    <div id = "toolbar" class="row no-margin" style="margin-top: 3%; margin-bottom: 0; padding-bottom: 0">
+
+    </div>
+    <div class="row no-margin" style="padding-top: 2px">
+        <div id = 'desc-editor' class="editor editable col-lg-10 col-md-10  col-ms-12 col-xs-12 col-lg-offset-1 col-md-offset-1" style="overflow:auto; margin-top: 0; margin-bottom: 3%; height: 40vh;">
+
+        </div>
+    </div>
+    <div class="row no-margin">
+        <div class="col-lg-10 col-md-10  col-ms-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+            *This description will be in the searching process. Try to add more keywords related to your services
+        </div>
+    </div>
+    <div class="row no-margin">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-10 col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-2">
+            <button id="submit_button" class="button"><span class="glyphicon glyphicon-ok"></span> Submit</button>
+            <button id="cancel_button"  class="button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+</div>
+
+
+<link href={{ asset('bundles/bd/css/font-awesome.min.css') }} rel="stylesheet">
+<link href={{ asset('bundles/bd/input-focus-effect/input-style.css') }} rel="stylesheet">
+<link href={{ asset('bundles/bd/jquery-multiselector/css/jquery-multiselector.css') }} rel="stylesheet">
+
+<link href={{ asset('bundles/bd/jquery-multiselector/css/multiselector-custom.css') }} rel="stylesheet">
+<style>
+
+    .notifyjs-bootstrap-custom-notify{
+
+        background-color: #e52;
+        color: white;
+        font-size: 17px;
+        line-height: 18px;
+    }
+
+    .input-row{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .toolbar_btn{
+        background-color: white;
+        background: white none !important;
+        color: #9d9d9d !important;
+        border-color:rgb(77, 144, 254);
+
+        padding: 2px;
+    }
+
+    .toolbar_btn:hover{
+
+        background-color: whitesmoke;
+        border-color: #4caf50;
+
+        padding: 2px;
+    }
+
+    span.ui-buttonset{
+        padding: 0 5px;
+        margin: auto;
+    }
+
+    .toolbar_btn{
+        background: #333 !important;
+        color: #9d9d9d !important;
+    }
+
+    .toolbar_btn:hover{
+        background: #000 !important;
+        color: #fff !important;
+        border-color: #4caf50;
+    }
+
+    .editable{
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .editable:hover, .editable:focus{
+        border: 2px solid #3399FF;
+
+    }
+
+    .hallotoolbar{
+        text-align: center;
+    }
+
+    .placeholder{
+        color: #9d9d9d;
+        height: 100%;
+        width: 100%;
+        font-weight:200;
+        font-style: italic;
+        font-size:
+                3.5vw;
+        text-align:center;
+    }
+</style>
+
+
+
+<script src="{{ asset('bundles/bd/js/hallo.js') }}"></script>
+<script src="{{ asset('bundles/bd/js/rangy-core.js') }}"></script>
+
+<script src="{{ asset('bundles/bd/superplaceholder/js/superplaceholder.js') }}"></script>
+
+<script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector.js') }}"></script>
+<script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector-filter.js') }}"></script>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('#desc-editor').html($('#company_desc').val());
+
+        jQuery('.editable').hallo({
+            plugins: {
+                'halloformat': {},
+                'halloheadings': {},
+                'hallolists': {},
+                'halloreundo': {},
+                'hallojustify': {},
+            },
+            buttonCssClass:'toolbar_btn',
+            toolbarCssClass:'toobar_style',
+            toolbar: 'halloToolbarFixed',
+            parentElement: '#toolbar',
+            placeholder : '<p class="placeholder">Add Company Description</p>'
+        }).bind('hallomodified' , function(event,data) {
+
+            if (data.content.length == 2500) {
+                $(this).notify("Maximum text level reached", {
+                    elementPosition: 'bottom left',
+                    className: 'custom-notify',
+                });
+            }
+            else if (data.content.length > 2500) {
+                $(this).notify("Maximum text level reached", {
+                    elementPosition: 'bottom left',
+                    className: 'custom-notify',
+                });
+                $(event.target).html(data.content.slice(0, 2500));
+            }
+
+        }).bind('halloactivated', function(event,data){
+        });
+
+
+        var editable=$('.editable');
+        editable.css('min-width',50);
+        editable.focus();
+        $('#company_companyName').focus();
+
+
+        $(".input-effect input").focusout(function(){
+            if($(this).val() != ""){
+                $(this).addClass("has-content");
+            }else{
+                $(this).removeClass("has-content");
+            }
+        })
+
+        $(".input-effect input").each(function(){
+            if($(this).val() != ""){
+                $(this).addClass("has-content");
+            }else{
+                $(this).removeClass("has-content");
+            }
+        })
+    });
+
+
+    //super placeholders
+    superplaceholder({
+        el: document.querySelector('#company_companyName'),
+        sentences: [ 'It is your company name', 'Xception-SL PVT',],
+        options: {
+
+            // delay between sentences (in milliseconds)
+            sentenceDelay: 1500,
+            // should start on input focus. Set false to autostart
+            startOnFocus: true,
+            // Initially shuffle the passed sentences
+            shuffle: false,
+            // Show cursor or not. Shows by default
+            showCursor: true,
+            // String to show as cursor
+            cursor: '|',
+
+            loop: true,
+            letterDelay: 50,
+//            startOnFocus: false
+        }
+    });
+    superplaceholder({
+        el: document.querySelector('#company_brandName'),
+        sentences: [ 'Lets famous your brand', 'Xception'],
+        options: {
+            loop: true,
+            letterDelay: 50,
+            sentenceDelay: 1500,
+//            startOnFocus: false
+        }
+    });
+
+
+    $('#submit_button').click(function(e){
+
+        $('#form_block .alert').fadeOut('fast');
+        $('#company_desc').val($('#desc-editor').html());
+
+        e.preventDefault();
+        var form =  $("form[name='company']");
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('modify_generalinfo')|raw }}?id={{ company_id|raw }}',
+            data: form.serializeArray(),
+            success: function (data) {
+                alert('save success');
+                console.dir(data);
+                loadPage('general');
+            },
+            error: function (e) {
+                var errors =$.parseJSON(e.responseText).error;
+                var errorDiv = $('#form_block .alert');
+
+                console.dir(errors);
+                $(errors).each(function(i,e){
+                    errorDiv.append('<p>'+ e.error+'</p>');
+                });
+                errorDiv.fadeIn().delay(10000).fadeOut();
+                alert('error in saving form')
+            },
+        });
+    });
+
+
+
+    $("select").multiselect({
+        selectedList : 10,
+        noneSelectedText : 'Product or Service Type',
+//        uncheckAllText : 'Uncheck All Types',
+//        checkAllText : 'Check All Types',
+        selectedText : '# out of # selected',
+        minWidth : 350,
+        parent : $('#menuselector'),
+
+
+    }).multiselectfilter({
+
+    });
+
+
+//
+
+</script>
+
+
+{#multiselect widget -old black#}

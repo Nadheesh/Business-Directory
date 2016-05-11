@@ -1,0 +1,108 @@
+
+
+.ui-multiselect{
+    /*background-color: #333;*/
+    background: #fff ;
+    color: #333;
+    /*color: #fff;*/
+    padding: 10px;
+}
+.ui-multiselect-hover,.ui-multiselect-focus{
+    background: #fff ;
+    color: #333;
+    /*color: #fff;*/
+    padding: 10px;
+    border:1px solid #3399FF;
+    /*border :1px solid  #3399FF;*/
+
+}
+
+.ui-state-hover{
+    background: whitesmoke !important;
+    border:1px solid #3399FF !important;
+    border-radius: 1px;
+
+
+}
+
+.ui-state-focus{
+    background: whitesmoke !important;
+    border:1px solid #3399FF !important;
+    border-radius: 1px;
+
+}
+/*.ui-multiselect:hover .ui-icon{*/
+/*background-image: url("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/dark-hive/images/ui-icons_ffffff_256x240.png");*/
+/*}*/
+
+/*.ui-multiselect>.ui-icon{*/
+/*background-image: url("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/dark-hive/images/ui-icons_cccccc_256x240.png");*/
+/*}*/
+
+
+.ui-multiselect-header{
+
+    font :15px/24px "Lato", Arial, sans-serif;
+    background: #fff ;
+    color: #333 ;
+    border: none;
+    border-bottom: 1px solid #ccc ;
+    /*color: #fff;*/
+
+}
+.ui-multiselect-header a{
+    color: #333 !important;
+}
+
+.ui-multiselect-header a:hover{
+    color: #333 !important;
+}
+
+
+.ui-multiselect-header input{
+    color: #000;
+}
+
+.ui-multiselect-header input:focus{
+    /*border-color: #3399FF;*/
+}
+
+/*.ui-multiselect-header .ui-icon{*/
+    /*background-image: url("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/dark-hive/images/ui-icons_cccccc_256x240.png");*/
+/*}*/
+
+.ui-multiselect-menu {
+    background-color: #fff;
+    /*border :1px solid  #3399FF;*/
+}
+
+/*.ui-multiselect-menu label{*/
+/*background-color: #000;*/
+/*}*/
+
+.ui-multiselect-checkboxes{
+    background-color: #fff;
+    color: #000;
+    font :15px/24px "Lato", Arial, sans-serif;
+}
+
+
+
+.ui-multiselect-checkboxes label{
+    font-weight: normal !important;
+}
+.ui-multiselect-checkboxes label:hover{
+    background-color: #fff;
+    color: #000;
+}
+
+.ui-multiselect-checkboxes:hover ,.ui-multiselect-menu:hover label{
+    background-color: #fff;
+    color: #000;
+}
+.ui-multiselect-menu:out-of-range label{
+    background-color: #fff;
+    color: #000;
+}
+
+

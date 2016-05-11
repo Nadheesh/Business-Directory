@@ -1,0 +1,86 @@
+
+<style>
+
+    .profile-pic{
+        width: 160px;
+        height: 160px;
+    }
+
+</style>
+
+<div class="container">
+    <h3 >
+        {% if keyWord is not empty %}
+            {{ companies.count }}  Search Results for "{{ keyWord }}"
+        {% else %}
+            {{ companies.count }} Search Results
+        {%  endif %}
+    </h3>
+    <hr>
+    <div>
+
+        <div class="container-fluid">
+
+            {% for company in companies %}
+                score : {{ company.score  }}
+
+                <div class="row">
+
+                    {% if company.profileUrl is empty %}
+                        <div class="profile-pic" style="background: url('{{ asset('bundles/bd/images/placeholder/placeholder-1.jpg') }}')">
+
+                        </div>
+                    {% else %}
+                        <div class="profile-pic" style="background: url("{{ company.profileUrl }}")">
+
+                        </div>
+                    {% endif %}
+
+                </div>
+                <div style="border-bottom: #000000; border-top: #000000" onclick="document.location = '{{ path('view_company', {'company_id': company.id}) }}'">
+
+                    <hr>
+                    <br>
+                    <label>Company Name</label> {{ company.companyName  }}
+                    <br>
+
+                    <br>
+                    <label>Company Email</label> {{ company.contactEmail  }}
+                    <br>
+
+                    <br>
+                    <label>Since</label> {{ company.startDate.format('Y-m-d')  }}
+                    <br>
+
+                    <br>
+                    <label>Product Types</label>
+                    {% for product in  company.productTypes %}
+                        {{ product.productType  }}
+                    {% endfor %}
+                    <br>
+
+                    <br>
+                    <label>Countries :</label>
+                    <label>Head Office</label>
+                    {{ company.address.country  }}
+                    {% if company.branches.count > 0  %}
+                        <label>Branches</label>
+                        {% for branch in  company.branches %}
+                            {{ branch.address.country  }}
+                        {% endfor %}
+                    {% endif %}
+                    <br>
+                    <hr>
+                </div>
+
+            {% endfor %}
+
+            <input id="count" value="{{ count }}" type="hidden">
+        </div>
+    </div>
+</div>
+
+
+
+
+

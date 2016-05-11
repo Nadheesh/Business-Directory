@@ -1,0 +1,83 @@
+{% extends 'BDBundle::base.html.twig' %}
+
+{% block otherstylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('bundles/bd/css/formStyle.css') }}"/>
+    <script src="{{ asset('bundles/bd/js/reziableFormCompnonet.js') }}"></script>
+
+    <link href={{ asset('bundles/bd/css/font-awesome.css') }} rel="stylesheet">
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="{{ asset('bundles/bd/js/hallo.js') }}"></script>
+    <script src="{{ asset('bundles/bd/js/rangy-core.js') }}"></script>
+    {#<link rel="stylesheet" href="{{ asset('bundles/bd/css/jquery-ui.css') }}"/>#}
+    {#<script src="{{ asset('bundles/bd/js/jquery-ui.js') }}"></script>#}
+
+
+
+
+    {#<style>#}
+        {#.ui-widget-header {#}
+            {#background:#b9cd6d;#}
+            {#border: 1px solid #b9cd6d;#}
+            {#color: #FFFFFF;#}
+            {#font-weight: bold;#}
+        {#}#}
+        {#.ui-widget-content {#}
+            {#background: #cedc98;#}
+            {#border: 1px solid #DDDDDD;#}
+            {#color: #333333;#}
+        {#}#}
+        {##resizable-14{ width: 150px; height: 150px;#}
+            {#padding: 0.5em;text-align: center; margin: 0; }#}
+    {#</style>#}
+    <!-- Javascript -->
+    {#<script>#}
+        {#$(function() {#}
+            {#$( "#resizable-14" ).resizable({#}
+                {#create: function( event, ui ) {#}
+                    {#$("#resizable-15").text ("I'm Created!!");#}
+                {#},#}
+                {#resize: function (event, ui)#}
+                {#{#}
+                    {#$("#resizable-16").text ("top = " + ui.position.top +#}
+                            {#", left = " + ui.position.left +#}
+                            {#", width = " + ui.size.width +#}
+                            {#", height = " + ui.size.height);#}
+                {#}#}
+            {#});#}
+        {#});#}
+    {#</script>#}
+
+{% endblock %}
+
+{% form_theme form 'BDBundle:theme:customizedTheme.html.twig' %}
+
+
+{% block body %}
+
+<div class="editable" contenteditable="true">
+    <p>asdasdsadasd</p>
+</div>
+
+            {{ form_start(form) }}
+             {{ form_errors(form.slide1.text) }}
+            {{ form_end(form) }}
+
+    <script>
+        //contenteditable activated
+        jQuery('.editable').hallo({
+            plugins: {
+                'halloformat': {},
+                'halloheadings': {},
+                'hallolists': {},
+                'halloreundo': {}
+            },
+            toolbar: 'halloToolbarFixed'
+        });
+    </script>
+
+{% endblock %}
+

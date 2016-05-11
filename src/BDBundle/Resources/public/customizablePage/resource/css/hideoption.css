@@ -1,0 +1,39 @@
+
+.hideable-style:hover .hide-button{
+    display: block;
+
+}
+
+.hide-button {
+    position: absolute;
+    display: none;
+    z-index: 99 !important;
+
+    /*styles*/
+    /*border: 1px;*/
+    top: -14px;
+    right:0px ;
+    /*border-radius: 1em;*/
+    /*background: #f7f7f7;*/
+    /*color: #fed136;*/
+
+}
+
+.hideable{
+
+}
+
+.hideable-style:hover{
+    /*border: 2px solid #f1f1f1;*/
+    /*border-radius: 1em;*/
+    background-color:#fed136 ;
+}
+
+.hideable-style{
+    border : none;
+    border-radius: 0;
+}
+
+.hidden-element{
+    opacity: 0.5;
+}

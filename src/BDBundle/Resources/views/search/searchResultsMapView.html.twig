@@ -1,0 +1,117 @@
+
+
+<div id="m_container" class="container-fluid" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+            <div id="map"></div>
+
+        </div>
+
+    </div>
+    <div  class="row">
+
+    </div>
+
+    <input id="count" value="{{ count }}" type="hidden">
+</div>
+
+<style>
+
+    .map-container {
+        height: 55vh;
+        /*!*display: flex !important;*!*/
+        /*align-items: center;*/
+        /*justify-content: center*/
+    }
+
+    @media (max-width: 767px) {
+        #map {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #333;
+            border-radius: 2px;
+        }
+    }
+
+    @media (min-width: 767px) {
+        #map {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #333;
+            border-radius: 2px;
+        }
+    }
+
+
+</style>
+
+
+
+<script>
+
+
+    var branches = null;
+    branches = {{ branches|json_encode()|raw }};
+
+    if (branches!=null && branches.length> 0){
+
+        $('#m_container').addClass('map-container');
+        var map = new GMaps({
+            el: '#map',
+//                lat: 48.8583701,
+//                lng: 2.2944813,
+        });
+
+
+        var bounds = [];
+
+        branches.forEach(function(branch, index){
+
+            if (typeof branch.address.latitude === 'undefined' || branch.address.latitude === null ){
+
+            }
+            else {
+                //set bounds to define zoom of map
+                var latlng = new google.maps.LatLng(branch.address.latitude, branch.address.longitude);
+                bounds.push(latlng);
+
+                map.addMarker({
+                    id:branch._id,
+                    lat: branch.address.latitude,
+                    lng: branch.address.longitude,
+                    title: branch.branchName,
+                    infoWindow: {
+                        content: '<h4>'+branch.branchName+'</h4><div>'+branch.address.city+','+branch.address.country+'</div>',
+                        maxWidth: 150
+                    },
+                    color : 'blue',
+                    dblclick : function(e){
+                        // showDetails(branch);
+                    },
+                    click : function(e){
+
+                    }
+                });
+
+            }
+
+        });
+        map.fitLatLngBounds(bounds);
+    }else{
+
+        $('#m_container').removeClass('map-container').html('<h3>No results found</h3>');
+//        $('#map').parent().html('<h3>No results found</h3>');
+        $('#map').hide();
+    }
+
+
+
+    function showDetails(branch){
+
+    }
+
+
+</script>
+
+
+

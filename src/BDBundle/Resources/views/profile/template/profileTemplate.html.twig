@@ -1,0 +1,204 @@
+
+
+
+{#company header#}
+<div class="row" style="">
+    <div class="container">
+        <div id="main-section" class="row inner-box-c" style="background:transparent; padding-bottom: 10px">
+            <div class="col-lg-2  col-md-2 col-sm-5 col-xs-5">
+                {% if company.profileUrl is empty %}
+                    <div class="profile-pic" style="background: url('{{ asset('bundles/bd/images/placeholder/placeholder-1.jpg') }}')"></div>
+                {% else %}
+                    <div class="profile-pic" style="background: url('{{ company.profileUrl }}')" ></div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-6  col-md-6 col-sm-7 col-xs-7" >
+                <div class="container-fluid">
+
+                    {#brand name#}
+                    <h1 class="text-left">{{ company.companyName}}</h1>
+                    <h4 class="text-left">{{ company.companyName }} </h4>
+                    <h4 class="text-left">Headquarters : {{ company.address.city }}, {{ company.address.country }}</h4>
+                    <h4 class="text-left"> Since&nbsp;{{  company.startDate|date('Y') }} </h4>
+                    <h5 class="text-left">{{ company.businessType }}</h5>
+                    <p>Website : <a class="text-left" href="{{ company.url }}">{{ company.url }}</a></p>
+                    <p>E-mail - {{ company.contactEmail }}</p>
+
+                </div>
+
+            </div>
+
+            {#third column -rating display#}
+            <div id = "rating-col" class="col-lg-4 col-md-4  col-sm-12 col-xs-12">
+                <div class="container-fluid">
+
+                    {#rating summery#}
+                    <div class="row">
+                        <div class="col-lg-5  col-md-5 col-sm-5 col-xs-5">
+                            <div >
+                                <h1 class="total-rate">0</h1>
+                            </div>
+                        </div>
+                        <div class="col-lg-5  col-md-5 col-sm-5 col-xs-5" style="color: #aaa; margin-top: 20px">
+
+                            {#display star rating#}
+                            <div class="row">
+                                <input id="display_rating" type="text" data-size="xs" >
+                            </div>
+
+                            {#display user count#}
+                            <div class="row">
+                                <p class="user-count"><span class="glyphicon glyphicon-user "></span> {{ company.commentCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {#user count vs # of stars#}
+                    {#<div class="row">#}
+
+                    {#<div class="progress">#}
+                    {#<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"#}
+                    {#aria-valuemin="0" aria-valuemax="100" style="width:60%; text-align: left;" >#}
+                    {#&nbsp;<span class="glyphicon glyphicon-star"></span> 5&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>12312#}
+                    {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="progress"  >#}
+                    {#<div class="progress-bar " role="progressbar" aria-valuenow="10"#}
+                    {#aria-valuemin="0" aria-valuemax="100" style="width:10%; text-align: left;">#}
+                    {#&nbsp;<span class="glyphicon glyphicon-star"></span> 5&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>6344#}
+                    {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="progress" >#}
+                    {#<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"#}
+                    {#aria-valuemin="0" aria-valuemax="100" style="width:25%; text-align: left;">#}
+                    {#&nbsp;<span class="glyphicon glyphicon-star"></span> 5&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>6344#}
+                    {#</div>#}
+                    {#</div>#}
+
+
+
+
+                    {#<div class="progress">#}
+                    {#<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"#}
+                    {#aria-valuemin="0" aria-valuemax="100" style="width:30%">#}
+                    {#60% Complete (warning)#}
+                    {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="progress">#}
+                    {#<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70"#}
+                    {#aria-valuemin="0" aria-valuemax="100" style="width:70%">#}
+                    {#70% Complete (danger)#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+        {#company description#}
+        <div id="desc_section" class="row inner-box-c" style="background-color: white">
+            {#company description#}
+            {% if company.desc is empty  %}
+
+                <div  class="container-fluid" style="height: 7vh; align-items: center;display: flex">
+                    <h3 style="color: #ccc; margin: auto"> No Description Provided</h3>
+                </div>
+
+
+            {% else %}
+                <div id="desc">
+                    {{ company.desc| raw }}
+                </div>
+
+
+            {% endif %}
+            <hr>
+        </div >
+    </div>
+
+</div>
+
+
+
+
+<style>
+
+    .rating span{
+
+        -webkit-text-stroke-width: 0 !important;
+    }
+
+
+    .btn-read{
+
+        margin: 20px 5% 0 5%;
+
+    }
+    .btn-read .btn{
+        border: none;
+        width: 90%;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 30px;
+        margin: auto;
+        color: #2BB673;
+
+    }
+
+    .btn-read .btn:hover{
+        outline: none;
+    }
+
+    .profile-pic{
+        width: 160px;
+        height: 160px;
+        margin: 25px auto 25px auto;
+    }
+
+    .total-rate{
+        font-size:72px;
+        color: #aaa
+    }
+
+    .user-count{
+        color: #aaa
+    }
+</style>
+
+{#read more#}
+<script src="{{ asset('bundles/bd/readmore/js/readmore.min.js') }}"></script>
+
+<script>
+
+    $('#desc').readmore({
+        speed: 500,
+        collapsedHeight: 200,
+        lessLink: '<div class="btn-read"><button class="btn btn-default" " href="#">Read Less</button></div>',
+        moreLink: '<div class="btn-read"><button class="btn btn-default" " href="#">Read More</button></div>'
+    });
+
+    $('#display_rating').val(3.4).rating({displayOnly: true, step: 0.1});
+
+
+    {% if company.ratingScore is not empty  %}
+
+    $('.total-rate').html(({{ company.ratingScore }}).toFixed(1))
+    $('#display_rating').val({{ company.ratingScore }}).rating({displayOnly: true, step: 0.1});
+
+
+    {% else %}
+
+    $('.total-rate').html('NR')
+    $('#display_rating').val(0).rating({displayOnly: true, step: 0.1});
+    $('#rating-col .user-count').html('<span class="glyphicon glyphicon-user "></span> ' + 0);
+
+    {% endif %}
+
+</script>
+

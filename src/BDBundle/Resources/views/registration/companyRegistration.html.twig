@@ -1,0 +1,925 @@
+{% extends 'BDBundle::base.html.twig' %}
+
+{% block otherstylesheets %}
+
+
+    {#jquery ui#}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/theme.min.css" rel="stylesheet">
+
+    {#jquery ui#}
+    <script src="{{ asset('bundles/bd/js/jquery-ui.js') }}"></script>
+
+    <script src="{{ asset('bundles/bd/superplaceholder/js/superplaceholder.js') }}"></script>
+
+    <link href={{ asset('bundles/bd/jquery-multiselector/css/jquery-multiselector.css') }} rel="stylesheet">
+    <link href={{ asset('bundles/bd/jquery-multiselector/css/multiselector-custom.css') }} rel="stylesheet">
+
+
+    <script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector.js') }}"></script>
+    <script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector-filter.js') }}"></script>
+
+    <link href={{ asset('bundles/bd/input-focus-effect/input-style.css') }} rel="stylesheet">
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container">
+
+        {{ form_start(form) }}
+
+
+        {{ form_errors(form) }}
+
+        <div class="row stepsBar-container">
+            {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
+        </div>
+        <div class="row" style="overflow: auto;">
+
+            <div class="col-lg-8 col-md-8 col-lg-offset-2  col-md-offset-2 form-container">
+
+                <h3 class="header-f">{{ flow.getCurrentStepLabel() | trans }}</h3>
+                <hr>
+                    {{ form_errors(form) }}
+                    {% if flow.getCurrentStepNumber() == 1 %}
+
+                        <div>
+                            <h5 style="padding-bottom: 20px">Tell us the name of your amazing company</h5>
+
+                            <div class="row no-margin center-parent">
+                                <div class="col-3  input-effect center-child">
+                                    {{ form_widget(form.companyName, { 'attr': {'class': "effect-20",
+                                        'placeholder': ' ', 'maxlength' :'50'} }) }}
+                                    {{ form_label(form.companyName) }}
+                                    <span class="focus-border">
+                                <i></i>
+                                 </span>
+                                </div>
+                            </div>
+                            <div class="row alert">
+                                {{ form_errors(form.companyName) }}
+                            </div>
+
+                            <div class="row no-margin center-parent">
+                                <div class="col-3  input-effect center-child optional-f" >
+                                    {{ form_widget(form.brandName, { 'attr': {'class': "effect-20",
+                                        'placeholder': ' ', 'maxlength' :'50'} }) }}
+                                    {{ form_label(form.brandName) }}
+                                    <span class="focus-border">
+                                        <i></i>
+                                 </span>
+                                </div>
+                            </div>
+                            <div class="row no-margin">
+                                    <p class="optional">*optional</p>
+                            </div>
+                            <div class="row  alert">
+                                {{ form_errors(form.brandName) }}
+                            </div>
+
+                        </div>
+                        {#script for the placeholders. the if condition will filer this and render#}
+                        {#and render this only if neccessay. do not move#}
+                        <script>
+                            //super placeholders
+                            superplaceholder({
+                                el: document.querySelector('#company_brandName'),
+                                sentences: [ 'Lets famous your brand', 'Xception', ],
+                                options: {
+                                    loop: true,
+                                    letterDelay: 50,
+                                    sentenceDelay: 1500,
+//            startOnFocus: false
+                                }
+                            });
+                            superplaceholder({
+                                el: document.querySelector('#company_companyName'),
+                                sentences: [ 'It is your company name', 'Xception-SL PVT','ABC INC'],
+                                options: {
+
+                                    // delay between sentences (in milliseconds)
+                                    sentenceDelay: 1500,
+                                    // should start on input focus. Set false to autostart
+                                    startOnFocus: true,
+                                    // Initially shuffle the passed sentences
+                                    shuffle: false,
+                                    // Show cursor or not. Shows by default
+                                    showCursor: true,
+                                    // String to show as cursor
+                                    cursor: '|',
+
+                                    loop: true,
+                                    letterDelay: 50,
+//            startOnFocus: false
+                                }
+                            });
+                        </script>
+
+                    {% elseif flow.getCurrentStepNumber() == 2 %}
+
+                        <p class="ins-f">The product and services types</p>
+                        <div class="row no-margin ">
+                            <div class="row no-margin ">
+                                <div id="menuselector" class="row center-parent"></div>
+                            </div>
+                            <div class="row no-margin">
+                                {{ form_widget(form.productTypes) }}
+                            </div>
+                            <div class="row alert">
+                                {{ form_errors(form.productTypes) }}
+                            </div>
+
+
+                        </div>
+
+                        {#these css and js are only specific to this section.#}
+                        <style>
+
+                            #menuselector{
+                                padding-top: 0 !important;
+                                padding-bottom: 0 !important;
+                            }
+
+                            .ui-multiselect-menu-custom{
+
+                                margin-bottom: 0 !important;
+                                margin-top: 0 !important;
+                                position: relative !important;
+                                z-index: 1 !important;
+                                height: 40vh !important;
+                                max-height: 40vh;
+                                border-top: 1px;
+                                border-bottom: 1px;
+                                border-color: #ccc;
+                                border-radius: 3px;
+
+                            }
+
+                            .ui-multiselect-checkboxes-custom{
+                                height: 80% !important;
+                            }
+
+                            #company_productTypes{
+                                display: block!important;
+                                height: 1px !important;
+                                outline: none!important;
+                                outline-color: white;
+                                border-color: white;
+                                background: transparent;
+                                z-index: -100;
+                            }
+                            .ui-multiselect{
+                                display: none;
+                            }
+                            .ui-multiselect-menu{
+                                box-sizing: content-box !important;
+                            }
+                        </style>
+                        <script>
+                            $("#company_productTypes").multiselect({
+                                selectedList : 10,
+                                noneSelectedText : 'Product or Service Type',
+                                selectedText : '# out of # selected',
+                                minWidth : 500,
+                                fixed : true,
+                                autoOpen: true,
+                                parent : $('#menuselector'),
+
+
+
+                            }).multiselectfilter().show();
+
+                            $('.ui-multiselect-menu').addClass('ui-multiselect-menu-custom center-child');
+                            $('.ui-multiselect-checkboxes').addClass('ui-multiselect-checkboxes-custom');
+
+
+                        </script>
+
+                    {% elseif flow.getCurrentStepNumber() == 3 %}
+
+                        <p class="ins-f">Company Contact details</p>
+
+                        {#contact email#}
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child">
+                                {{ form_widget(form.contactEmail, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'50'} }) }}
+                                {{ form_label(form.contactEmail) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.contactEmail) }}
+
+                        </div>
+
+                        {#contact number#}
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child country-f" >
+                                {{ form_widget(form.contactNumbers.country, { 'attr': {'class': "effect-20 has-content",
+                                    'placeholder': ' ' } }) }}
+                                {{ form_label(form.contactNumbers.country) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                            <div class="col-3  input-effect center-child number-f">
+                                {{ form_widget(form.contactNumbers.number, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'20'} }) }}
+                                {{ form_label(form.contactNumbers.number) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.contactNumbers) }}
+                        </div>
+
+                        {#web site url(optional) #}
+                        <div class="row no-margin center-parent">
+                            <div class="col-3 input-effect center-child optional-f">
+                                {{ form_widget(form.url, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'100'} }) }}
+                                {{ form_label(form.url) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row no-margin">
+                            <p class="optional">*optional</p>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.url) }}
+                        </div>
+
+                        <style>
+                            .number-f{
+                                width:calc(40% - 150px) !important;
+                                margin-left: 0 !important;
+                                padding-left: 0;
+                            }
+
+                            .country-f,   .country-f select {
+                                width: 150px !important;
+                                margin-right: 0!important;
+                                padding-right: 0;
+                            }
+
+                            .country-f select{
+                                height: 39px;
+                            }
+
+
+                        </style>
+
+                        <script>
+                            //super placeholders
+                            superplaceholder({
+                                el: document.querySelector('#company_contactEmail'),
+                                sentences: [ 'Company contact email', 'https://xception@bd.com', 'https://abc@newmail.com' ],
+                                options: {
+                                    loop: true,
+                                    letterDelay: 50,
+                                    sentenceDelay: 1500,
+                                }
+                            });
+                            superplaceholder({
+                                el: document.querySelector('#company_url'),
+                                sentences: [ 'Company web site URL', 'businessdirectory.com', 'xceptionsl.lk' ],
+                                options: {
+                                    loop: true,
+                                    letterDelay: 50,
+                                    sentenceDelay: 1500,
+                                }
+                            });
+
+                        </script>
+
+
+                    {% elseif flow.getCurrentStepNumber() == 4 %}
+
+                        <p class="ins-f">Company Location details</p>
+
+                        {#address email#}
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child">
+                                {{ form_widget(form.address.street, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'100'} }) }}
+                                {{ form_label(form.address.street) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+
+                        <div class="row alert">
+                            {{ form_errors(form.address.street) }}
+
+                        </div>
+
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child city-f" >
+                                {{ form_widget(form.address.city, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'100' } }) }}
+                                {{ form_label(form.address.city) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                            <div class="col-3  input-effect center-child zipcode-f">
+                                {{ form_widget(form.address.zipcode, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'20'} }) }}
+                                {{ form_label(form.address.zipcode) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.address.city) }}
+                            {{ form_errors(form.address.zipcode) }}
+                        </div>
+
+
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child optional-f">
+                                {{ form_widget(form.address.state, { 'attr': {'class': "effect-20",
+                                    'placeholder': ' ', 'maxlength' :'100'} }) }}
+                                {{ form_label(form.address.state) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row no-margin">
+                            <p class="optional">*optional</p>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.address.state) }}
+                        </div>
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child country-f-o">
+                                {{ form_widget(form.address.country, { 'attr': {'class': "effect-20 has-content",
+                                    'placeholder': ' '} }) }}
+                                {{ form_label(form.address.country) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.address.country) }}
+                        </div>
+
+                        <style>
+                            .city-f{
+                                width:calc(40% - 100px) !important;
+                                margin-right: 0!important;
+                                padding-right: 0;
+                            }
+
+                            .zipcode-f {
+                                width: 100px !important;
+                                margin-left: 0 !important;
+                                padding-left: 0;
+
+                            }
+
+                            .country-f-o select{
+                                height: 39px ;
+                                width: 100%;
+                            }
+
+                        </style>
+
+                        <script>
+
+                            superplaceholder({
+                                el: document.querySelector('#company_address_street'),
+                                sentences: [ 'No.34 , main street', 'P.O.23 ,Liberty plaza'],
+                                options: {
+                                    loop: true,
+                                    letterDelay: 50,
+                                    sentenceDelay: 1500,
+                                }
+                            });
+
+                        </script>
+
+
+                       {% elseif flow.getCurrentStepNumber() == 5 %}  {#company register information#}
+
+                        <p class="ins-f"><strong>If your company is not registered please skip this <br>(keep Business type as Unregistered)</strong></p>
+
+                        <div class="row no-margin center-parent type-f">
+                            <div class="col-3  input-effect center-child">
+                                {{ form_widget(form.businessType, { 'attr': {'class': "effect-20 has-content",
+                                    'placeholder': ' '} }) }}
+                                {{ form_label(form.businessType) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.businessType) }}
+                        </div>
+
+
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child reg-c-f">
+                                {{ form_widget(form.registeredCountry, { 'attr': {'class': "effect-20 has-content",
+                                    'placeholder': ' '} }) }}
+                                {{ form_label(form.registeredCountry) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.registeredCountry) }}
+                        </div>
+
+
+
+                        <div class="row no-margin center-parent">
+                            <div class="col-3  input-effect center-child str-date-f">
+                                {{ form_widget(form.startDate, { 'attr': {'class': "effect-20 has-content",
+                                    'placeholder': ' '} }) }}
+                                {{ form_label(form.startDate) }}
+                                <span class="focus-border">
+                                <i></i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="row alert">
+                            {{ form_errors(form.startDate) }}
+                        </div>
+
+
+
+                        <style>
+                            .city-f{
+                                width:calc(40% - 100px) !important;
+                                margin-right: 0!important;
+                                padding-right: 0;
+                            }
+
+                            #company_startDate{
+                                padding: 0 !important;
+
+                            }
+                            .str-date-f select{
+                                height: 37px ;
+                                width: 33.33%;
+
+                            }
+
+
+                            .type-f select, .reg-c-f  select{
+                                height: 39px ;
+                                width: 100%;
+                            }
+
+
+                        </style>
+
+                    {% elseif flow.getCurrentStepNumber() == 6 %}
+
+                        <p class="ins-f">Just one more step... <span style="font-size: 30px">&#9786</span> </p>
+
+                        <div class="row  captcha-f">
+
+                                <div class="">
+                                    {{ form_widget(form.captcha) }}
+                                </div>
+
+                        </div>
+                        <div class="row center-parent term-f">
+                            <div class="col-md-7 center-child">
+                                {{ form_widget(form.termsAccepted) }} I agree to the Business Directory
+                                <a data-toggle="modal" data-target="#license-model">Terms and Policies</a>
+                            </div>
+                        </div>
+
+
+                        <style>
+
+                            .term-f{
+
+                            }
+
+                            .captcha-f img {
+
+                                margin: 20px 15% 20px 15%;
+                                width: 70%;
+                                outline: 2px solid #333 ;
+                            }
+
+                            .captcha-f input{
+
+                                margin: 20px 10% 20px 10% ;
+                                width: 80%;
+                                height: 30px;
+                                outline: 2px solid #3399ff;
+                            }
+
+                            .captcha-f div{
+                                width: 30%;
+                                display: block;
+                                margin: auto;
+
+                                background: rgba(226,226,226,1);
+                                background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+                                background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+                                background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+                                background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+                                background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+                                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+
+                            }
+
+                        </style>
+
+                        {{ include('BDBundle:registration:termsAndPolicies.html.twig') }}
+
+
+                    {% elseif flow.getCurrentStepNumber() == 7 %}
+
+                        <p class="ins-f">Please recheck the information before submission</p>
+
+                        <div class="row">
+
+                            <div class="container">
+
+
+                                <div class="row field" >
+                                    <div class="col-md-2">
+                                        Company Name :
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ formData.companyName }}
+                                    </div>
+                                </div>
+
+                                <div class="row   field">
+                                    <div class="col-md-2">
+                                        {{ 'Product Type' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ui>
+                                            {% for product in formData.productTypes %}
+                                                <li>{{product.getProductType}}</li>
+                                            {% endfor %}
+                                        </ui>
+                                    </div>
+                                </div>
+
+
+                                <div class="row field">
+                                    <div class="col-md-2">
+                                        {{ 'Contact Email' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ formData.contactEmail }}
+                                    </div>
+                                </div>
+
+                                <div class="row   field">
+                                    <div class="col-md-2">
+                                        {{ 'Contact No' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        +{{ formData.contactNumbers.country }}-{{ formData.contactNumbers.number }}
+                                    </div>
+                                </div>
+
+                                {% if formData.url is not empty %}
+                                <div class="row   field">
+                                    <div class="col-md-2">
+                                        {{ 'Company Website' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{ formData.url}}">{{ formData.url}}  </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                <div class="row   field">
+                                    <div class="col-md-2">
+                                        {{ 'Address' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ formData.address.street}}, {{ formData.address.city}}
+                                        {% if formData.address.zipCode is not empty %}
+                                            {{ formData.address.zipCode}},
+                                        {% else %}
+                                            ,
+                                        {% endif %}
+                                        {% if formData.address.state is not empty %}
+                                            {{ formData.address.state}},
+                                        {% endif %}
+                                        {{ formData.address.StrCountry}}.
+                                    </div>
+                                </div>
+
+                                <div class="row field">
+                                    <div class="col-md-2">
+                                        {{ 'Business Type' | trans }} :
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ formData.businessType }}
+                                    </div>
+                                </div>
+
+                                {%  if formData.businessType != 'Unregistered' %}
+                                    <div class="row field">
+                                        <div class="col-md-2">
+                                            {{ 'Start Date' | trans }} :
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ formData.startDate | date('d-M-Y') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="row  field">
+                                        <div class="col-md-2">
+                                            {{ 'Registered Country' | trans }} :
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ formData.registeredCountry }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                            </div>
+                        </div>
+
+
+                        <style>
+                            .field{
+                                margin: 5px 10px;
+                                padding: 0;
+                            }
+                        </style>
+                    {% endif %}
+
+                    {{ form_rest(form) }}
+
+                <div class="row center-parent btn-group-f" >
+                    <div class="center-child">
+                        {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' with {
+                        craue_formflow_button_label_finish: 'Submit',
+                        craue_formflow_button_label_reset: 'Reset',
+                        craue_formflow_button_label_next: 'Next',
+                        craue_formflow_button_label_back: 'Back',
+                        } %}
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    {#button styles#}
+    <style>
+
+        .btn-group-f{
+            left : 0 ;
+            bottom: 0;
+            position: absolute;
+        }
+
+        .craue_formflow_buttons button {
+            width: 100px;
+            background: #27AE60;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 1px;
+            cursor: pointer;
+            padding: 10px 5px;
+
+        }
+        .craue_formflow_buttons button:hover,  .craue_formflow_buttons button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+        }
+    </style>
+
+
+    {#fixes for the errors#}
+    <style>
+
+
+
+        .ins-f{
+            padding-bottom: 5px;
+            color: #333;
+            font-size: 17px;
+            line-height: 17px;
+
+        }
+
+        .col-3{
+            width: 40%;
+        }
+
+
+
+        .effect-20 ~ label, .effect-22 ~ label{
+            z-index: 1 !important;
+        }
+        .input-effect{
+            font-size: 15px;
+        }
+    </style>
+
+    <style>
+
+        .header-f{
+            text-align: center;
+            height: 50px;
+            background-color: #3399ff;
+            color: whitesmoke;
+            line-height: 50px;
+            border-radius: 3px;
+        }
+        .center-parent{
+            display: flex;
+            align-content: center;
+            align-items: center;
+        }
+
+        .center-child{
+            margin:20px auto;
+        }
+
+        .optional{
+            font-size: 15px;
+            color: #bfbfbf;
+            text-align: left;
+            margin:0 0 0 30%;
+            width: 33.33%;
+        }
+
+        .optional-f{
+            margin-bottom: 0;
+        }
+
+        .alert{
+            font-size: 15px;
+            color: #fff;
+            text-align: left;
+            margin:0 0 10px 30%;
+            width: 40%;
+            background-color: #E8504F;
+            border-radius: 3px;
+            border: 0;
+            padding: 0;
+        }
+
+        .no-margin{
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .form-container{
+
+            color: #333;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            background: white;
+            min-height: 55vh;
+
+        }
+
+        .stepsBar {
+            display:flex;
+            -webkit-display:flex;
+            align-items:stretch;
+        }
+        .stepsBar li {
+            list-style-type: none;
+            float:left;
+            display:flex;
+            flex:1;
+            text-align:center;
+            font-size:0;
+            position:relative;
+            counter-increment:step;
+        }
+        .stepsBar li.craue_formflow_current_step ~ li a:before {
+            color:#bebebe;
+            border-color: #bebebe;
+        }
+        .stepsBar li.craue_formflow_current_step ~ li a:before {
+            color:#bebebe;
+            border-color: #bebebe;
+        }
+        .stepsBar li.craue_formflow_current_step ~ li:after, .stepsBar li.craue_formflow_current_step:after {
+            border-color: #bebebe;
+        }
+        .stepsBar li > a {
+            margin: 0 auto;
+        }
+        .stepsBar li a:before {
+            content:counter(step);
+            display:inline-block;
+            margin:0 auto;
+            width:50px;
+            height:50px;
+            line-height:48px;
+            border:4px solid green;
+            font-size:18px;
+            border-radius:40px;
+            background:#EEEEEE;
+            color:green;
+        }
+        .stepsBar li:after {
+            content: "";
+            border: 2px solid green;
+            width:100%;
+            position:absolute;
+            top:48%;
+            right:-50%;
+            z-index:-1;
+        }
+        .stepsBar li:last-child:after {
+            content:none;
+        }
+        .stepsBar li,.stepsBar ul{
+            background-color: transparent;
+        }
+        .stepsBar li.craue_formflow_current_step a::before{
+            color:rgb(238, 85, 34) !important;
+            border-color:rgb(238, 85, 34) !important;
+        }
+
+
+
+        body{
+            color: #333;
+            font-family: "Roboto", UILanguageFont, Arial, sans-serif;
+
+
+            background: rgba(226,226,226,1);
+            background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+        }
+
+    </style>
+
+    {#form field design#}
+    <script>
+
+
+        $(document).ready(function(){
+
+            var container = $('.form-container');
+            container.height(container.height() + 150);
+
+            $(".input-effect input").focusout(function(){
+                if($(this).val() != ""){
+                    $(this).addClass("has-content");
+                }else{
+                    $(this).removeClass("has-content");
+                }
+            });
+
+            $(".input-effect input").each(function(){
+                if($(this).val() != ""){
+                    $(this).addClass("has-content");
+                }else{
+                    $(this).removeClass("has-content");
+                }
+            });
+        });
+
+
+    </script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

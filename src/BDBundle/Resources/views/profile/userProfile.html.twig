@@ -1,0 +1,244 @@
+{% extends 'BDBundle::base.html.twig' %}
+
+{% block otherstylesheets %}
+
+{% endblock %}
+
+
+{% form_theme form 'BDBundle:theme:customizedTheme.html.twig' %}
+
+{% block body %}
+
+
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% set userName = app.user.username %}
+
+        {% if user.getUsername|trim == userName|trim  %}
+
+            <div id="main-section" class="container" style="border-radius: 4px ; background-color: white; padding-top: 10px">
+
+                <div class="container">
+                    <div class="row no-margin" style=" width: 100%">
+
+                        <div class=" col-md-2 pull-right" style="width: 30%">
+                            <button  class="pull-right btn-c" data-toggle="modal" data-target="#form-modal"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        </div>
+
+                    </div>
+
+                    {% if error|trim is not empty %}
+                        <div class="row alert" style="text-align: center ; color: red; font-weight: bold">
+                            <h4>{{ error }}</h4>
+                        </div>
+                    {% endif %}
+
+                    {% if success|trim is not empty %}
+                        <div class="row alert" style="text-align: center ; color:#27AE60; font-weight: bold">
+                            <h4>{{ success }}</h4>
+                        </div>
+                    {% endif %}
+
+
+                    <div class="row no-margin">
+                        <div  class="col-md 8" style="width: 70%">
+
+                            <h3 >Logged in as: {{user.getUsername}}</h3 >
+                        </div>
+                    </div>
+                    <div class="row no-margin">
+                        <h4>Name  :
+                            {% if user.getFirstName|trim is not empty %}
+                                {{ user.getFirstName }}
+                            {% else %}
+
+                            {% endif %}
+
+                            {% if user.getLastName|trim is not empty %}
+                                {{user.getLastName }}
+                            {% else %}
+
+                            {% endif %}
+                        </h4>
+                    </div>
+
+                    <div class="row no-margin">
+                        <h4>Email  :
+                            {% if user.getEmail|trim is not empty %}
+                                {{user.getEmail }}
+                            {% else %}
+                                Not Set
+                            {% endif %}
+                        </h4>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div id="company-section" class="container " style="background: transparent">
+                    {% if user.companies is not empty %}
+
+                        <h4>Company Registered</h4>
+                        {% for c in companies %}
+                            <div class="row company-row" >
+                                <div class="col-md-3">
+                                    <h4>{{ c.name }}</h4>
+                                </div>
+                                <div class="col-md-5 pull-right">
+                                    <a class="btn btn-primary" href="{{ path('my_company' , {'company_id' : c.id} ) }}">Edit Profile</a>
+                                    <a class="btn btn-primary"  href="{{ path('view_company', {'company_id' : c.id} ) }}">View Profile</a>
+                                    <a class="btn btn-danger"  data-toggle="modal" data-target="#confirmation-modal">Remove</a>
+
+                                </div>
+                            </div>
+                            {#confirmation model#}
+                            <div class="modal fade" id="confirmation-modal" role="dialog" >
+                                <div class="modal-dialog" style="top:200px">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Are you sure</h4>
+                                        </div>
+                                        {{ form_errors(form) }}
+                                        <div class="modal-body" style="padding: 20px">
+                                            Removing {{ c.name }} will remove all the information about your company from the system.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-danger" href="{{ path('remove_company') }}?id={{ c.id }}">Yes</a>
+                                            <button  type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+
+
+                    {% else %}
+                        <div class="row no-margin">
+                            <h3 style="text-align: center"> No Companies registered to you</h3>
+                        </div>
+                        <hr>
+                        <div class="row no-margin">
+                           <h4>What are you waiting for. <a id="reg_link" href="{{ path('company_register') }}">register</a> your company at <a href="{{ path('homepage') }}"> Business Directory</a></h4>
+                        </div>
+
+
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+            <style>
+
+                .btn{
+                    width: 25%;
+                }
+                .btn-danger, .btn-default{
+                    width: 100px;
+                }
+
+                .company-row{
+                    font-size: 17px;
+                    padding: 30px 20px;
+                    margin: 20px;
+                    border-radius: 4px;
+
+
+                }
+                .btn-c   {
+                    width: 100px;
+                    background: #27AE60;
+                    font-weight: bold;
+                    color: white;
+                    border: 0 none;
+                    border-radius: 1px;
+                    cursor: pointer;
+                    padding: 5px 5px;
+
+                }
+                .btn-c:hover ,  .btn-c:focus  {
+                    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+                }
+
+                .no-margin{
+                    margin: 0;
+                    padding: 0;
+                }
+
+                body, .company-row{
+                    color: #333;
+                    font-family: "Roboto", UILanguageFont, Arial, sans-serif;
+
+
+                    background: rgba(226,226,226,1);
+                    background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+                    background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+                    background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+                    background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+                    background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+                }
+
+            </style>
+
+            <script>
+                $("#reg_link").delay(1000).notify("Click to expand advance filter tags",{
+                    elementPosition: 'right',
+                    className: 'info',
+                });
+            </script>
+
+
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="form-modal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Edit User</h4>
+                        </div>
+
+                        {{ form_errors(form) }}
+                        <div class="modal-body" style="padding: 20px">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+
+                            <div class="row">
+                                <button type="submit" class="btn-c">Submit</button>
+                                <button type="button" class="btn-c" data-dismiss="modal">Close</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% else %}
+            <div id="errorMsg" align="center">
+                Error : User not found
+            </div>
+        {% endif %}
+    {% else %}
+        <div id="errorMsg" align="center">
+            Error : User not found
+        </div>
+    {% endif %}
+
+
+
+
+
+{% endblock %}

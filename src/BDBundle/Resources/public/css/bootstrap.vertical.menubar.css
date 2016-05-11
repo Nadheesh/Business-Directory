@@ -1,0 +1,57 @@
+.nav-custom {
+    background-color: #333;
+    border-color: #4caf50;
+    border-radius: 0;
+    height: 100%;
+}
+
+.nav-custom > li > a {
+    color: #9d9d9d;
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-size: 17px;
+}
+
+.nav-custom > li > a:hover,
+.nav-custom > li > a:focus {
+    color: #ffffff;
+    background-color: #020101;
+}
+.nav-custom > .active > a,
+.nav-custom > .active > a:hover,
+.nav-custom > .active > a:focus {
+    color: #ffffff;
+    background-color: #4caf50;
+}
+.nav-custom > .open > a,
+.nav-custom > .open > a:hover,
+.nav-custom > .open > a:focus {
+    color: #ffffff;
+    background-color: #4caf50;
+}
+
+/*.navbar-default .navbar-collapse,*/
+/*.navbar-default .navbar-form {*/
+/*border-color: #000000;*/
+/*}*/
+/*.navbar-default .navbar-link {*/
+/*color: #000000;*/
+/*}*/
+/*.navbar-default .navbar-link:hover {*/
+/*color: #ffffff;*/
+/*}*/
+
+@media (max-width: 767px) {
+    .nav-custom .open .dropdown-menu > li > a {
+        color: #000000;
+    }
+    .nav-custom .open .dropdown-menu > li > a:hover,
+    .nav-custom .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+    }
+    .nav-custom .open .dropdown-menu > .active > a,
+    .nav-custom .open .dropdown-menu > .active > a:hover,
+    .nav-custom .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background-color: #4caf50;
+    }
+}

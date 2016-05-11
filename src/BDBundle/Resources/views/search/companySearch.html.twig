@@ -1,0 +1,512 @@
+{% extends 'BDBundle::base.html.twig' %}
+
+{% block otherstylesheets %}
+
+    {#<link rel="stylesheet" href="{{ asset('bundles/bd/css/formStyle.css') }}"/>#}
+
+    {#jquery ui#}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/theme.min.css" rel="stylesheet">
+
+
+    <link href={{ asset('bundles/bd/jquery-multiselector/css/jquery-multiselector.css') }} rel="stylesheet">
+    <link href={{ asset('bundles/bd/jquery-multiselector/css/multiselector-custom.css') }} rel="stylesheet">
+
+    {#<link rel="stylesheet" href="{{ asset('bundles/bd/css/jquery-ui.css') }}"/>#}
+    {#<script src="{{ asset('bundles/bd/js/jquery-ui.js') }}"></script>#}
+
+{% endblock %}
+
+{#{% form_theme form 'BDBundle:theme:customizedTheme.html.twig' %}#}
+
+{% block body %}
+
+    <style>
+
+
+        body{
+            color: #333;
+            font-family: "Roboto", UILanguageFont, Arial, sans-serif;
+
+
+            background: rgba(226,226,226,1);
+            background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 34%, rgba(209,209,209,1) 62%, rgba(254,254,254,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+        }
+
+
+        .search-row{
+            margin-top: 2%;
+        }
+
+        .result-set{
+            margin:0;
+            background-color: #FFFFFF;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding-top: 10px;
+            margin-top: 20px;
+            display: block;
+        }
+
+        .ui-multiselect-menu{
+            position: relative;
+        }
+
+        .top-row{
+            z-index: 1030;
+            width:100%;
+            top : 100px;
+            left: 0;
+            padding:20px 0;
+        }
+
+        .no-margin{
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+
+    <div class="container-fluid">
+        {{ form_start(form) }}
+
+        <div id="row error_block alert" style="display: none; text-align: center">
+
+
+        </div>
+
+        <div class="row search-row">
+
+
+            <div class="col-md-3 col-sm-10 col-xs-12 selector-fix">
+                <h3 class="no-margin">Advance Search</h3>
+                <h4>Filter Tags</h4>
+            </div>
+
+            <div class="col-md-5 col-sm-8 col-xs-10">
+                <div class="form-horizontal" role="search">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            {{ form_widget(form.searchKey, { 'attr': {'class': "form-control",'placeholder': 'Search'} }) }}
+                            <button id="search_submit" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i>Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div id="selector-col" class="col-md-3 col-sm-10 col-xs-12 selector-fix">
+
+                {#product selecto#}
+                <div class="selector-row">
+                    <div class="row no-margin">
+                        {{ form_widget(form.productTypes) }}
+                    </div>
+                    <div id="product_menuselector" class="row no-margin">
+
+                    </div>
+                </div>
+
+                {#country selector#}
+                <div class=" selector-row">
+                    <div class="row no-margin">
+                        {{ form_widget(form.country) }}
+                    </div>
+                    <div id="country_menuselector" class="row no-margin ">
+
+                    </div>
+                </div>
+
+                {#date selector 1#}
+                {{ form_errors(form.startDate) }}
+                <div class="selector-row">
+
+                    <div class="row no-margin">
+                        <button id="toggle" type="button" class="ui-multiselect ui-widget ui-state-default" aria-haspopup="true" style="width: 260px;">
+                            <span class="ui-icon ui-icon-triangle-2-n-s"></span><span>Date Range
+                        </span>
+                        </button>
+                    </div>
+
+                    <div class="row no-margin">
+                        <div id="from-effect" class="">
+                            {{ form_widget(form.startDate) }}
+                        </div>
+                    </div>
+
+                </div>
+                {{ form_end(form) }}
+            </div>
+
+            {#main column#}
+            <div class="col-lg-9  col-md-7 col-sm-10 col-xs-12">
+
+                <div class="result-set row">
+
+                    <div class="row no-margin">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <div class="dropdown">
+
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Order by
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                                    <li><a href="#"><span class="glyphicon glyphicon-star"></span> Ratings</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;Best Matching</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;Newest</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;Oldest</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="  col-lg-5 col-md-5 col-sm-8 col-xs-8 pull-right" >
+                            <div class="btn-group pull-right">
+                                <button id="map_view" type="button" class="btn btn-default pull-right">
+                                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Map View
+                                </button>
+                                <button id="list_view" type="button" class="btn btn-default pull-right">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row no-margin">
+                        <div class="row no-margin" style="display: flex; align-items: center">
+                            <div id="pagination" class="row pagination" style="margin: auto">
+                            </div>
+                        </div>
+                        <div id="result_set" class="parent">
+                            <h3 style="color: #ccc">Let me search that for you</h3>
+                        </div>
+                        <div class="row no-margin" style="display: flex; align-items: center">
+                            <div id="pagination" class="row pagination" style="margin: auto">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    {#gmap script#}
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="{{ asset('bundles/bd/gmap/js/gmaps.min.js') }}" type="text/javascript" ></script>
+
+
+    <script src="{{ asset('bundles/bd/js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector.js') }}"></script>
+    <script src="{{ asset('bundles/bd/jquery-multiselector/js/jquery-multiselector-filter.js') }}"></script>
+
+    <style>
+
+
+        .selector-row{
+            border: 1px solid #ccc;
+            padding: 0px 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-radius: 3px;
+            width: 300px;
+
+        }
+
+        .ui-multiselect{
+            font-weight: bold;
+            border: none;
+            background: transparent !important;
+            outline:0;
+
+        }
+
+        .ui-multiselect-menu{
+            border-radius: 3px;
+            border: 0;
+
+
+        }
+
+        .ui-multiselect-filter input{
+            border-radius: 4px;
+        }
+        .ui-multiselect-menu, .ui-multiselect-header,.ui-multiselect-checkboxes,.ui-multiselect-checkboxes:hover,.ui-multiselect-menu:hover label{
+            background: transparent;
+        }
+
+
+        .ui-multiselect-hover,.ui-multiselect-focus{
+            border: none;
+            background: transparent;
+            padding: 10px;
+            outline:0;
+
+        }
+
+        .btn-group button{
+            width: 120px;;
+        }
+
+        .ui-widget{
+            -webkit-box-sizing: content-box !important;
+            box-sizing: content-box !important;
+        }
+
+        .parent {
+            height: 63vh;
+            display: flex !important;
+            align-items: center;
+            justify-content: center
+        }
+
+        @media (min-width:  1364px) {
+            .selector-fix{
+                width:340px !important;
+            }
+
+        }
+
+        @media (max-width:  1300px) {
+            .selector-fix{
+                width:340px !important;
+            }
+
+        }
+
+
+
+        /*hide native date picker*/
+
+
+    </style>
+
+    <script>
+
+        $(document).ready(function(e){
+
+            var view = '{{ view }}';
+
+            if (view.trim() =='map'){
+                $('#map_view').addClass('active');
+            }else {
+                $('#list_view').addClass('active');
+            }
+
+            $('#search_submit').click(function(ev){
+                loadFirstSearchResults(ev,view);
+            });
+
+            $('#map_view').click(function(ev){
+
+                if (view.trim() == 'map'){
+
+                }else {
+                    loadFirstSearchResults(ev,'map');
+                    $(this).addClass('active');
+                    view = 'map';
+                    $('#list_view').removeClass('active')
+                }
+            });
+
+            $('#list_view').click(function(ev){
+
+                if (view == 'map'.trim()){
+                    loadFirstSearchResults(ev,'default');
+                    $(this).addClass('active');
+                    view = 'default';
+                    $('#map_view').removeClass('active')
+                }else {
+
+                }
+            });
+
+
+            $("#search_productTypes").multiselect({
+                selectedList : 10,
+                noneSelectedText : 'Product or Service Type',
+//        uncheckAllText : 'Uncheck All Types',
+//        checkAllText : 'Check All Types',
+                selectedText : '# out of # selected',
+                minWidth : 200,
+                parent : $('#product_menuselector'),
+                fixed : true,
+                width : 280,
+                show : 'blind',
+                hide : 'blind',
+
+            }).multiselectfilter({
+
+            });
+
+            $("#search_country").multiselect({
+                selectedList : 10,
+                noneSelectedText : 'Country',
+//        uncheckAllText : 'Uncheck All Types',
+//        checkAllText : 'Check All Types',
+                selectedText : '# out of # selected',
+                minWidth : 200,
+                parent : $('#country_menuselector'),
+                fixed : true,
+                show : 'blind',
+                hide : 'blind',
+                width : 280,
+
+            }).multiselectfilter();
+
+
+
+
+            $("#selector-col").delay(1000).notify("Click to expand advance filter tags",{
+                elementPosition: 'right',
+                className: 'info',
+            });
+        });
+
+
+
+
+
+        function loadFirstSearchResults(ev,view){
+            ev.preventDefault();
+
+            var container = $('#result_set');
+            var errorDiv = $('#error_block');
+
+            container.addClass('parent');
+            container.html('<img style="margin: 0" src="{{ asset('bundles/bd/images/preloader.gif') }}" />');
+            errorDiv.hide();
+
+
+            var formdata=  $("form[name='search']").serializeArray();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('company_search')|raw }}?view='+view,
+                data: formdata,
+                success: function (data) {
+                    container.removeClass('parent');
+                    console.dir(data);
+
+                    container.html(data).hide().fadeIn();
+
+                    var count =$('input#count').val();
+
+                    if (count > 0){
+                        $('.pagination').empty().bootpag({
+                            total: Math.floor(count/10)+1,
+                            page: 1,
+                            maxVisible: 5,
+                            leaps: true,
+                            firstLastUse: true,
+                            first: '←',
+                            last: '→',
+                            wrapClass: 'pagination',
+                            activeClass: 'active',
+                            disabledClass: 'disabled',
+                            nextClass: 'next',
+                            prevClass: 'prev',
+                            lastClass: 'last',
+                            firstClass: 'first'
+                        }).on('page', function(event, num){
+                            loadSearchResults(view,num,formdata)
+                        });
+                    }
+                },
+                error: function (e) {
+                    var errors =$.parseJSON(e.responseText).error;
+                    console.dir(errors);
+                    $(errors).each(function(i,e){
+                        errorDiv.append('<p>'+ e.error+'</p>');
+                    });
+                    errorDiv.fadeIn();
+                    alert('error in saving form')
+                },
+            });
+        }
+
+
+
+        function loadSearchResults(view,num,formdata){
+
+            console.dir(num);
+            var container = $('#result_set');
+            var errorDiv = $('#error_block');
+
+            container.addClass('parent');
+            container.html('<img style="margin: 0" src="{{ asset('bundles/bd/images/preloader.gif') }}" />');
+            errorDiv.hide();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('company_search')|raw }}?page='+num+'&view='+view,
+                data: formdata,
+                success: function (data) {
+                    container.removeClass('parent');
+                    console.dir(data);
+                    container.html(data).hide().fadeIn();
+                },
+                error: function (e) {
+                    var errors =$.parseJSON(e.responseText).error;
+                    console.dir(errors);
+                    $(errors).each(function(i,e){
+                        errorDiv.append('<p>'+ e.error+'</p>');
+                    });
+                    errorDiv.fadeIn();
+                    alert('error in saving form')
+                },
+            });
+        }
+
+
+
+        //
+        //        $( "#search_startDate" ).datepicker({
+        //            dateFormat: 'yy-mm-dd',
+        //            maxDate: "0",
+        //            changeMonth: true,
+        //            changeYear: true
+        //        });
+        //
+        //        $( "#search_startDate").attr('type','text');
+
+        //        $( "#to-date" ).datepicker({
+        //            dateFormat: 'yy-mm-dd',
+        //            maxDate: "0",
+        //            changeMonth: true,
+        //            changeYear: true
+        //        });
+
+        $('#toggle').click(function(){
+            $( "#from-effect" ).toggle( 'blind' );
+        });
+
+        //
+        //        $('#toggle').click(function(){
+        //            $( "#to-date" ).toggle( 'blind' );
+        //        });
+        //
+        $( "#from-effect").hide();
+        //        $( "#to-date").hide();
+
+    </script>
+
+{% endblock %}
+
+

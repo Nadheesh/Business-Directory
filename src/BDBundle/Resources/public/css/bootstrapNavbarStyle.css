@@ -1,0 +1,75 @@
+.navbar-default {
+    background-color: #333333;
+    border-color: #333;
+    border-radius: 0;
+}
+.navbar-default .navbar-brand {
+    color: #9d9d9d;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #fefdfd;
+}
+.navbar-default .navbar-text {
+    color: #9d9d9d;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #9d9d9d;
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-size: 17px;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #fefdfd;
+    background-color: #020101;
+
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #fefdfd;
+    background-color: #4caf50;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #fefdfd;
+    background-color: #4caf50;
+}
+.navbar-default .navbar-toggle {
+    border-color: #9d9d9d;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #020101;
+    border-color: #fff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #9d9d9d;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: #9d9d9d;
+}
+.navbar-default .navbar-link {
+    color: #9d9d9d;
+}
+.navbar-default .navbar-link:hover {
+    color: #fefdfd;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #9d9d9d;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #fefdfd;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #fefdfd;
+        background-color: #4caf50;
+    }
+}
