@@ -1,0 +1,17 @@
+bd:
+    resource: "@BDBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+logout:
+    path: /logout
+
+
+oneup_uploader:
+    resource: .
+    type: uploader
+
+#
+#fos_user:
+#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
