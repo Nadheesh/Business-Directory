@@ -338,9 +338,9 @@ class CompanyController extends Controller
             $userdb = $u_dm->getRepository('BDBundle:security\RegisteredUser')
                 ->find($user->getUsername());
 
+              
             if ($userdb) {
                 $companies = $userdb->getCompanies();
-
                 foreach($companies as $key=>$c){
 
                     if ($c == trim($company_id)){
