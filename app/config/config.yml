@@ -72,8 +72,8 @@ swiftmailer:
 doctrine_mongodb:
     connections:
         default:
-#            server:  mongodb://bd_user:test123@ds055594.mlab.com:55594/bd_db
-            server: mongodb://localhost:27017
+            server:  mongodb://bd_user:test123@ds015403.mlab.com:15403/bd_user
+#            server: mongodb://localhost:27017
             options: {}
     default_database: bd_db
     document_managers:
